@@ -1,8 +1,6 @@
 /**
 * @author koras
-*
-* only linux
-* g++ -o parser parser.cpp -lcurl
+* 
 *
 */
 #include <stdio.h>
