@@ -1,18 +1,22 @@
 /**
 * @author koras
-* 
+* only linux
+* g++ -o parser parser.cpp -lcurl
 *
 */
 #include <stdio.h>
 #include <unistd.h>
+#include <stdlib.h>
+
 #include <curl/curl.h>
  
-int main(void)
+#include "modules/Url.cpp"
+
+
+int main(int argc, char **argv)
+//int main(void)
 {
-  CURL *curl;
-  CURLcode res;
- 
- 
- 
+    Url * urlLink = new Url();
+    urlLink -> getUrl();
   return 0;
 }
