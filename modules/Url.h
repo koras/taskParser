@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <unistd.h>
 #include <curl/curl.h>
+#include <string>
   
 
 class Url {
@@ -8,5 +9,7 @@ class Url {
     public:
 
        Url();
-       int getUrl( char  urlPath);
+       //char (&str)[150]
+ 
+       int getUrl(char  urlPath);
 };

@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <curl/curl.h>
 #include <iostream>
+#include <string>
 
 #include "Url.h"
 using namespace std; 
@@ -11,9 +12,10 @@ Url::Url(){
 }
 
 
-int Url::getUrl( char  urlPath)
+int Url::getUrl(char urlPath)
 {
-             cout << urlPath << endl;
+
+                cout << urlPath << endl;
     return 0;
  const   char * indexFile = "/blob/master/index.html"; 
         ///blob/master/index.html
