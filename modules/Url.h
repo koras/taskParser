@@ -8,5 +8,5 @@ class Url {
     public:
 
        Url();
-       int getUrl();
+       int getUrl( char  urlPath);
 };
