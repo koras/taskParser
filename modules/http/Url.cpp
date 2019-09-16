@@ -11,6 +11,8 @@ using namespace std;
 Url::Url(){
  const   string indexFile = "/blob/master/index.html"; 
 }
+
+
 /**
 *
 *
@@ -24,7 +26,7 @@ bool Url::curl_httpget(const string &url)
     CURLcode result;
  
     curl = curl_easy_init();
-    
+
     std::string tempname = "tmp/tempIndex.txt";
     FILE *fp = fopen(tempname.c_str(),"wb");
 
