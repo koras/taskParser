@@ -1,9 +1,3 @@
-/**
-* @author koras
-* only linux
-* g++ -o parser parser.cpp -lcurl
-*
-*/
 #include <stdio.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -12,7 +6,7 @@
 #include <curl/curl.h>
 #include <iostream>
  
-#include "modules/Url.cpp"
+#include "modules/http/Url.cpp"
  
 using namespace std; 
  
@@ -45,15 +39,19 @@ string question2 = "Where do you live? ";
         
     //  char * urlPathGit = argv[1]; 
         Url * urlLink = new Url();
-        urlLink -> getUrl(urlPathGit);
- 
+     //   urlLink -> getUrl(urlPathGit);
+      bool getUrl  = urlLink -> curl_httpget(urlPathGit);
+      
+     // if(getUrl){
+         
+     // }
 
 
 //  }else{
   //      cout << errorDomen << endl; ;
   // }
 
-   //     cout << "  \n "+urlLink -> indexPage << endl; ;
+     //   cout << urlLink  -> indexPage + "  \n " << endl; ;
     
   //  Url * urlLink = new Url();
   //  urlLink -> getUrl();

@@ -11,8 +11,10 @@ using namespace std;
 class Url {
     public:
        Url();    
-      std::string indexPage;
-      std::string getBranches;
-      std::string getReadme; 
-      int getUrl(char (&urlPath)[150]);
+       
+    bool curl_httpget(const string &url);
+
+    std::string indexPage;
+    std::string getBranches;
+    std::string getReadme;  
 };
