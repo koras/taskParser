@@ -2,12 +2,17 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string>
+
+#include <regex>
+#include <sstream>
+#include <fstream>
 #include <curl/curl.h>
 #include <iostream>
 #include "modules/http/Url.cpp"
  
 using namespace std; 
  
+ bool serchPattern();
 
 int main(int argc, char* argv[])
 {
@@ -38,8 +43,7 @@ string question2 = "Where do you live? ";
         cout << question2  << endl; ;
         
       char * urlPathGit = argv[1]; 
-        Url * urlLink = new Url();
-     //   urlLink -> getUrl(urlPathGit);
+        Url * urlLink = new Url(); 
       bool getUrl  = urlLink -> curl_httpget(urlPathGit);
       
       if(getUrl){
@@ -51,9 +55,50 @@ string question2 = "Where do you live? ";
         cout << errorDomen << endl; ;
    }
 
+    serchPattern();
+
      //   cout << urlLink  -> indexPage + "  \n " << endl; ;
     
   //  Url * urlLink = new Url();
   //  urlLink -> getUrl();
   return 0;
 }
+
+
+bool serchPattern()
+{ 
+
+  //ifstream t("tmp/tempIndex.txt");
+
+  ifstream htmlText;
+  string line;
+  string eduEmail = "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+";
+
+
+  int testNum = 0;
+
+  //list<string> l;
+
+
+  htmlText.open("tmp/tempIndex.txt");
+  if (htmlText.good())
+  {
+      while (getline(htmlText, line))
+      {
+          regex e(eduEmail); // the pattern
+          bool match = regex_search(line, e);
+          if (match) {
+            ++testNum;
+        }
+      }
+  }
+
+  htmlText.close();
+
+  system("pause");
+
+
+
+  return true;
+  }
+// @id:ms-vscode.cpptools
