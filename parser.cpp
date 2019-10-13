@@ -2,10 +2,8 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string>
-
 #include <curl/curl.h>
 #include <iostream>
- 
 #include "modules/http/Url.cpp"
  
 using namespace std; 
@@ -32,24 +30,26 @@ char  urlPathGit[150] = "https://raw.githubusercontent.com/Ekaterina1618/Ekateri
 
 
 string question2 = "Where do you live? ";
- // if(argv[1] != NULL){
+
+  if(argv[1] != NULL){
+    
         cout << startSearch << endl; ;
         cout << urlPathGit  << endl; ;
         cout << question2  << endl; ;
         
-    //  char * urlPathGit = argv[1]; 
+      char * urlPathGit = argv[1]; 
         Url * urlLink = new Url();
      //   urlLink -> getUrl(urlPathGit);
       bool getUrl  = urlLink -> curl_httpget(urlPathGit);
       
-     // if(getUrl){
+      if(getUrl){
          
-     // }
+      }
 
 
-//  }else{
-  //      cout << errorDomen << endl; ;
-  // }
+  }else{
+        cout << errorDomen << endl; ;
+   }
 
      //   cout << urlLink  -> indexPage + "  \n " << endl; ;
     

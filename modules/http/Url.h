@@ -13,8 +13,11 @@ class Url {
        Url();    
        
     bool curl_httpget(const string &url);
+    
+    bool createFolderTmp();
 
     std::string indexPage;
     std::string getBranches;
     std::string getReadme;  
+
 };

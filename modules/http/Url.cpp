@@ -3,6 +3,9 @@
 #include <curl/curl.h>
 #include <iostream>
 #include <string>
+#include <sys/stat.h>
+#include <sys/types.h>
+
 
 #include "Url.h"
 using namespace std; 
@@ -10,6 +13,7 @@ using namespace std;
 
 Url::Url(){
  const   string indexFile = "/blob/master/index.html"; 
+
 }
 
 
@@ -20,7 +24,12 @@ Url::Url(){
 */
 bool Url::curl_httpget(const string &url)
 {
-    string buffer;
+
+
+  Url::createFolderTmp();
+
+ 
+ 
  
     CURL *curl;
     CURLcode result;
@@ -28,6 +37,7 @@ bool Url::curl_httpget(const string &url)
     curl = curl_easy_init();
 
     std::string tempname = "tmp/tempIndex.txt";
+
     FILE *fp = fopen(tempname.c_str(),"wb");
 
     if (curl)
@@ -45,7 +55,7 @@ bool Url::curl_httpget(const string &url)
       fclose(fp);
 
       if (result == CURLE_OK)
-       //   return buffer;
+     
        return true;
     
     }
@@ -53,6 +63,23 @@ bool Url::curl_httpget(const string &url)
     return false;
 }
 
+
+bool Url::createFolderTmp()
+{
+ 
+  int check; 
+  const char * dirname = "tmp"; 
+  check = mkdir(dirname, 0755 ); 
+  
+  // check if directory is created or not 
+  if (!check) 
+    printf("Directory created\n"); 
+  else { 
+    printf("Unable to create directory\n"); 
+    //exit(1); 
+  }
+  return true;
+}
 
 
 
