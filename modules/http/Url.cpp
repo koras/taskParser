@@ -37,7 +37,6 @@ bool Url::curl_httpget(const string &url)
     curl = curl_easy_init();
 
     std::string tempname = "tmp/tempIndex.txt";
-
     FILE *fp = fopen(tempname.c_str(),"wb");
 
     if (curl)
@@ -76,9 +75,9 @@ bool Url::createFolderTmp()
     printf("Directory created\n"); 
   else { 
     printf("Unable to create directory\n"); 
-    //exit(1); 
+    exit(1); 
   }
-  return true;
+     return true;
 }
 
 
