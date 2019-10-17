@@ -2,7 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string>
-
+#include <locale>
 //#include <regex.h>     
  
 //#include <regex>
@@ -22,7 +22,12 @@ using namespace std;
 //using namespace std::tr1;
  
  bool serchPattern();
+ void  checkPattern();
 //g++  -o  parser parser.cpp -lcurl  -lboost_regex
+
+  std::string  regulars[4] ; 
+ 
+
 
 int main(int argc, char* argv[])
 {
@@ -59,6 +64,8 @@ int main(int argc, char* argv[])
 
          serchPattern();
 
+         checkPattern();
+
   // }else{
   //      cout << errorDomen << endl; ;
   //  }
@@ -73,10 +80,17 @@ int main(int argc, char* argv[])
 }
 
 
+
+void  checkPattern(){
+  // Print Strings stored in Vector 
+    for (int i=0; i<4; i++)     
+        cout << regulars[i] << "\n"; 
+}
+
 bool serchPattern()
-{ 
-
-
+{  
+  // std::locale::global(std::locale("russian"));
+  std::locale::global(std::locale(""));
     std::cout << "" << '\n';
  
   std::string::const_iterator start, end;
@@ -96,24 +110,27 @@ bool serchPattern()
 
    boost::match_results<std::string::const_iterator> what; 
 
-   boost::regex expression(" pattern=\"([\\/\\:\\/\\|\\@\\,\\#\\\\\?\\+\\.\\-\\\\)\\[\\]\\{\\}\\(\\)a-zA-ZаоуыэяеёюибвгдйжзклмнпрстфхцчшщьъАОУЫЭЯЕЁЮИБВГДЙЖЗКЛМНПРСТФХЦЧШЩЬЪ0-9]+)\" ");
-   
+    boost::regex regx;
+    // regx.imbue(std::locale("russian"));
+    regx.assign(" pattern=\"([\\/\\:\\/\\|\\@\\,\\#\\\\\?\\+\\.\\-\\\\)\\[\\]\\{\\}\\(\\)a-zA-Zа-яА-ЯёЁйЙыЫ0-9]+)\" ");
 
- boost::match_flag_type flags = boost::match_default; 
-   while(regex_search(start, end, what, expression, flags)) 
+  int iIterator = 0 ;
+ 
+    boost::match_flag_type flags = boost::match_default; 
+ 
+   while(regex_search(start, end, what, regx, flags)) 
    { 
-      // what[0] contains the whole string 
-      // what[5] contains the class name. 
-      // what[6] contains the template specialisation if any. 
-      // add class name and position to map: 
-   //   m[std::string(what[5].first, what[5].second) + std::string(what[6].first, what[6].second)] =  what[5].first - mystring.begin(); 
       start = what[0].second; 
-      std::cout << what[1] << '\n';
-      
-      flags |= boost::match_prev_avail; 
-      flags |= boost::match_not_bob; 
+      regulars[iIterator] = what[1];
+      iIterator ++;
    } 
+
+       
 
   return true;
   }
+
+
+
+
 // @id:ms-vscode.cpptools
