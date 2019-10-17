@@ -43,18 +43,15 @@ int main(int argc, char* argv[])
 
  char  urlPathGit[150] = "https://raw.githubusercontent.com/Ekaterina1618/Ekaterina1618.github.io/master/index.html";
 
-
- string question2 = "Where do you live? ";
-
+ 
   // if(argv[1] != NULL){
     
          cout << startSearch << endl; ;
-         cout << urlPathGit  << endl; ;
-         cout << question2  << endl; ;
+         cout << urlPathGit  << endl; ; 
         
     //   char * urlPathGit = argv[1]; 
          Url * urlLink = new Url(); 
-     //  bool getUrl  = urlLink -> curl_httpget(urlPathGit);
+       bool getUrl  = urlLink -> curl_httpget(urlPathGit);
       
      //  if(getUrl){
           
@@ -80,13 +77,11 @@ bool serchPattern()
 { 
 
 
-    std::cout << " serchPattern();" << '\n';
+    std::cout << "" << '\n';
  
   std::string::const_iterator start, end;
-
-   short stringlength = 3072;
-   std::string mystring( stringlength, '\0' );
-  //ifstream t("tmp/tempIndex.txt");
+  short stringlength = 3072;
+  std::string mystring( stringlength, '\0' );
 
     std::string tempname = "tmp/tempIndex.txt";
 
@@ -95,20 +90,13 @@ bool serchPattern()
     fseek(file , 0, SEEK_SET);
     fread(&mystring[0], sizeof(char), (size_t)stringlength, file);
     fclose(file);
-// вывод текста
 
-
-  start = mystring.begin(); 
+   start = mystring.begin(); 
    end = mystring.end(); 
 
-typedef std::map<std::string, int, std::less<std::string> > map_type; 
-map_type m ; 
-      boost::match_results<std::string::const_iterator> what; 
-  // boost::smatch what;
+   boost::match_results<std::string::const_iterator> what; 
 
-   boost::regex expression(" pattern=\"([\\/\\/\\|\\@\\,\\#\\\\\?\\+\\.\\-\\\\)\\[\\]\\{\\}\\(\\)a-zA-ZаоуыэяеёюибвгдйжзклмнпрстфхцчшщьъАОУЫЭЯЕЁЮИБВГДЙЖЗКЛМНПРСТФХЦЧШЩЬЪ0-9]+)\" ");
-//"(https?:\/\/)(www\.)?(((\w[\-]?)+\.\w+)|((\d{2,3}\.){3}\d{2,3}))(:\d{1,5})?([A-Za-z\d\/\.]+#?)
-   //std::string::const_iterator start, end; 
+   boost::regex expression(" pattern=\"([\\/\\:\\/\\|\\@\\,\\#\\\\\?\\+\\.\\-\\\\)\\[\\]\\{\\}\\(\\)a-zA-ZаоуыэяеёюибвгдйжзклмнпрстфхцчшщьъАОУЫЭЯЕЁЮИБВГДЙЖЗКЛМНПРСТФХЦЧШЩЬЪ0-9]+)\" ");
    
 
  boost::match_flag_type flags = boost::match_default; 
@@ -118,54 +106,13 @@ map_type m ;
       // what[5] contains the class name. 
       // what[6] contains the template specialisation if any. 
       // add class name and position to map: 
-      m[std::string(what[5].first, what[5].second) + std::string(what[6].first, what[6].second)] = 
-                what[5].first - mystring.begin(); 
-      // update search position: 
+   //   m[std::string(what[5].first, what[5].second) + std::string(what[6].first, what[6].second)] =  what[5].first - mystring.begin(); 
       start = what[0].second; 
-
-
-      //   std::cout << what << '\n';
-         std::cout << what[1] << '\n';
-      // update flags: 
+      std::cout << what[1] << '\n';
+      
       flags |= boost::match_prev_avail; 
       flags |= boost::match_not_bob; 
    } 
-
- 
-        // std::cout << m[0]<< '\n';
-
-/*
-  boost::regex_token_iterator<std::string::iterator> it(mystring.begin(), mystring.end(), expr, 1);
-  boost::regex_token_iterator<std::string::iterator> end;
-  while (it != end)
-    std::cout << *it++ << '\n';
-   std::cout <<  22 << '\n';
- 
- 
-
-      std::cout <<  mystring << '\n';
-
-   if(boost::regex_search (mystring, what, expr, flags)) 
-   { 
-
- int len = sizeof( mystring);
-      
-   std::cout <<  what.size() << '\n';
-   
-
-
-    for(int i = 0; i< len ;i++){
-      std::cout <<  what[i] << '\n';
-      }
-
-    std::cout << what[0] << '\n';
-    std::cout << what[1] << '\n';
-    std::cout << what[3] << '\n';
-    std::cout << what[4] << '\n';
- 
-   } 
-   */
- 
 
   return true;
   }
