@@ -106,8 +106,8 @@ map_type m ;
       boost::match_results<std::string::const_iterator> what; 
   // boost::smatch what;
 
-   boost::regex expression(" pattern=\"([\\W]+)\" ");
-
+   boost::regex expression(" pattern=\"([\\/\\/\\|\\@\\,\\#\\\\\?\\+\\.\\-\\\\)\\[\\]\\{\\}\\(\\)a-zA-ZаоуыэяеёюибвгдйжзклмнпрстфхцчшщьъАОУЫЭЯЕЁЮИБВГДЙЖЗКЛМНПРСТФХЦЧШЩЬЪ0-9]+)\" ");
+//"(https?:\/\/)(www\.)?(((\w[\-]?)+\.\w+)|((\d{2,3}\.){3}\d{2,3}))(:\d{1,5})?([A-Za-z\d\/\.]+#?)
    //std::string::const_iterator start, end; 
    
 
@@ -124,7 +124,8 @@ map_type m ;
       start = what[0].second; 
 
 
-         std::cout << what << '\n';
+      //   std::cout << what << '\n';
+         std::cout << what[1] << '\n';
       // update flags: 
       flags |= boost::match_prev_avail; 
       flags |= boost::match_not_bob; 
