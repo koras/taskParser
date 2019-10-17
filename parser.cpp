@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <string>
+
 //#include <regex.h>     
  
 //#include <regex>
@@ -11,54 +12,59 @@
 #include <fstream>
 #include <curl/curl.h>
 #include <iostream>
-//#include "modules/http/Url.cpp"
+#include "modules/http/Url.cpp"
  
+ 
+#include <boost/regex.hpp>  // Boost.Regex lib
+#include <boost/config.hpp>
+
 using namespace std; 
 //using namespace std::tr1;
  
  bool serchPattern();
+//g++  -o  parser parser.cpp -lcurl  -lboost_regex
 
 int main(int argc, char* argv[])
 {
+ 
+ string name, family;
 
-    serchPattern();
-// string name, family;
+   //https://github.com/a-ishere/a-ishere.github.io
+   //https://github.com/a-ishere/a-ishere.github.io/blob/master/index.html
+  const   string  errorDomen = "Domen github not found"; 
+  const   string  startSearch = "Start search github \n"; 
+ // const  char* urlPathGit = "https://github.com/a-ishere/a-ishere.github.io";
+ //const  char* urlPathGit = "https://raw.githubusercontent.com/a-ishere/a-ishere.github.io/master/index.html";
 
-//   //https://github.com/a-ishere/a-ishere.github.io
-//   //https://github.com/a-ishere/a-ishere.github.io/blob/master/index.html
-//  const   string  errorDomen = "Domen github not found"; 
-//  const   string  startSearch = "Start search github \n"; 
-// // const  char* urlPathGit = "https://github.com/a-ishere/a-ishere.github.io";
-// //const  char* urlPathGit = "https://raw.githubusercontent.com/a-ishere/a-ishere.github.io/master/index.html";
-
-//  // char  urlPathGit[150] = "https://github.com/Ekaterina1618/Ekaterina1618.github.io";
-//         //       https://github.com/Ekaterina1618/Ekaterina1618.github.io
-// //https://raw.githubusercontent.com/Ekaterina1618/Ekaterina1618.github.io/master/index.html
-
-
-// char  urlPathGit[150] = "https://raw.githubusercontent.com/Ekaterina1618/Ekaterina1618.github.io/master/index.html";
+  // char  urlPathGit[150] = "https://github.com/Ekaterina1618/Ekaterina1618.github.io";
+         //       https://github.com/Ekaterina1618/Ekaterina1618.github.io
+ //https://raw.githubusercontent.com/Ekaterina1618/Ekaterina1618.github.io/master/index.html
 
 
-// string question2 = "Where do you live? ";
+ char  urlPathGit[150] = "https://raw.githubusercontent.com/Ekaterina1618/Ekaterina1618.github.io/master/index.html";
 
-//   if(argv[1] != NULL){
+
+ string question2 = "Where do you live? ";
+
+  // if(argv[1] != NULL){
     
-//         cout << startSearch << endl; ;
-//         cout << urlPathGit  << endl; ;
-//         cout << question2  << endl; ;
+         cout << startSearch << endl; ;
+         cout << urlPathGit  << endl; ;
+         cout << question2  << endl; ;
         
-//       char * urlPathGit = argv[1]; 
-//         Url * urlLink = new Url(); 
-//       bool getUrl  = urlLink -> curl_httpget(urlPathGit);
+    //   char * urlPathGit = argv[1]; 
+         Url * urlLink = new Url(); 
+     //  bool getUrl  = urlLink -> curl_httpget(urlPathGit);
       
-//       if(getUrl){
-         
-//       }
+     //  if(getUrl){
+          
+    //   }
 
+         serchPattern();
 
-//   }else{
-//         cout << errorDomen << endl; ;
-//    }
+  // }else{
+  //      cout << errorDomen << endl; ;
+  //  }
 
   //  serchPattern();
 
@@ -73,98 +79,92 @@ int main(int argc, char* argv[])
 bool serchPattern()
 { 
 
+
+    std::cout << " serchPattern();" << '\n';
+ 
+  std::string::const_iterator start, end;
+
+   short stringlength = 3072;
+   std::string mystring( stringlength, '\0' );
   //ifstream t("tmp/tempIndex.txt");
-/**
-  ifstream htmlText;
-  string line;
-  string eduEmail = "(\\w+)(\\.|_)?(\\w*)@(\\w+)(\\.(\\w+))+";
+
+    std::string tempname = "tmp/tempIndex.txt";
+
+    FILE *file = fopen(tempname.c_str(),"r");
+
+    fseek(file , 0, SEEK_SET);
+    fread(&mystring[0], sizeof(char), (size_t)stringlength, file);
+    fclose(file);
+// вывод текста
 
 
-  int testNum = 0;
+  start = mystring.begin(); 
+   end = mystring.end(); 
 
-  //list<string> l;
-  &regex e("\\b(sub)([^ ]*)");   // matches words beginning by "sub"
+typedef std::map<std::string, int, std::less<std::string> > map_type; 
+map_type m ; 
+      boost::match_results<std::string::const_iterator> what; 
+  // boost::smatch what;
 
-    //regex_t  re;
-    
-   // regex integer("(\\+|-)?[[:digit:]]+");
+   boost::regex expression(" pattern=\"([\\W]+)\" ");
+
+   //std::string::const_iterator start, end; 
+   
+
+ boost::match_flag_type flags = boost::match_default; 
+   while(regex_search(start, end, what, expression, flags)) 
+   { 
+      // what[0] contains the whole string 
+      // what[5] contains the class name. 
+      // what[6] contains the template specialisation if any. 
+      // add class name and position to map: 
+      m[std::string(what[5].first, what[5].second) + std::string(what[6].first, what[6].second)] = 
+                what[5].first - mystring.begin(); 
+      // update search position: 
+      start = what[0].second; 
 
 
-  htmlText.open("tmp/tempIndex.txt");
-  if (htmlText.good())
-  {
-      while (getline(htmlText, line))
-      {
-          regex e(eduEmail); // the pattern
+         std::cout << what << '\n';
+      // update flags: 
+      flags |= boost::match_prev_avail; 
+      flags |= boost::match_not_bob; 
+   } 
 
-          bool match = regex_search(line, e);
-          if (match) {
-            ++testNum;
-        }
+ 
+        // std::cout << m[0]<< '\n';
+
+/*
+  boost::regex_token_iterator<std::string::iterator> it(mystring.begin(), mystring.end(), expr, 1);
+  boost::regex_token_iterator<std::string::iterator> end;
+  while (it != end)
+    std::cout << *it++ << '\n';
+   std::cout <<  22 << '\n';
+ 
+ 
+
+      std::cout <<  mystring << '\n';
+
+   if(boost::regex_search (mystring, what, expr, flags)) 
+   { 
+
+ int len = sizeof( mystring);
+      
+   std::cout <<  what.size() << '\n';
+   
+
+
+    for(int i = 0; i< len ;i++){
+      std::cout <<  what[i] << '\n';
       }
-  }
 
-  htmlText.close();
-
-  system("pause");
-
-
-*/
-
-
- //  regex_t    preg;                                                            
-  //    std::string  string = "a simple string";                                     
-  //   std::string  pattern = ".*(simple).*";                                       
-  //   int        rc;                                                              
-  //   size_t     nmatch = 2;                                                      
-  //  // regmatch_t pmatch[2];                                                       
-                                                                                
-  //   if ((rc = regcomp(&preg, pattern, REG_EXTENDED)) != 0) {                    
-  //      printf("regcomp() failed, returning nonzero (%d)\n", rc);                
-  //      exit(1);                                                                 
-  //   }                                                                           
-                                                                                
-  //   if ((rc = regexec(&preg, string, nmatch, pmatch, 0)) != 0) {                
-  //      printf("failed to ERE match '%s' with '%s',returning %d.\n",   string, pattern, rc);                                                    
-  //   }                                                                           
-                                                                                
-  //   regfree(&preg);  
-
-
-
-
-
-
-
-     std::regex e("(a.*cd)", regex::extended);
-    string s = R"(abcd cd abefcd ababcddecd)";
-    string match = "";
-    size_t i = 0;
-    while (s.size() > i)
-    {
-        smatch m;
-        string ss = s.substr(0, i);
-
-        regex_search(ss, m, e);
-        if (m.size() > 1 && m[1] != match) {
-            cout << m[1] << endl; 
-            match = m[1];
-        }
-        i++;
-    }
-        cin.get();
-
-
-
-
-
-
-
-
-
-
-
-
+    std::cout << what[0] << '\n';
+    std::cout << what[1] << '\n';
+    std::cout << what[3] << '\n';
+    std::cout << what[4] << '\n';
+ 
+   } 
+   */
+ 
 
   return true;
   }

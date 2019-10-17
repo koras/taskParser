@@ -75,7 +75,7 @@ bool Url::createFolderTmp()
     printf("Directory created\n"); 
   else { 
     printf("Unable to create directory\n"); 
-    exit(1); 
+  //  exit(1); 
   }
      return true;
 }
